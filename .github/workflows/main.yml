@@ -49,14 +49,14 @@ jobs:
         with:
           node-version: '12'
           cache: 'yarn'
+      - run: yarn
+      - run: yarn build
       - name: Save dist folder
         uses: actions/upload-artifact@v2
         with:
           name: dist
           if-no-files-found: error
           path: dist
-      - run: yarn
-      - run: yarn build
 
   deploy:
     runs-on: ubuntu-latest
