@@ -49,6 +49,12 @@ jobs:
         with:
           node-version: '12'
           cache: 'yarn'
+      - name: Save dist folder
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          if-no-files-found: error
+          path: dist
       - run: yarn
       - run: yarn build
 
@@ -57,6 +63,11 @@ jobs:
     needs: [test-unit, test-e2e, build]
     steps:
       - uses: actions/checkout@v2
+      - name: Download dist folder
+        uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: dist
       - run: ls -l dist
       - run: echo "Successfully deployed!"
 
