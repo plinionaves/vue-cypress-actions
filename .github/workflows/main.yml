@@ -25,6 +25,7 @@ jobs:
         with:
           node-version: '12'
           cache: 'yarn'
+      - run: yarn
       - run: yarn build
 
   test-unit:
@@ -36,6 +37,7 @@ jobs:
         with:
           node-version: '12'
           cache: 'yarn'
+      - run: yarn
       - run: yarn test:unit:ci
 
   test-e2e:
@@ -47,6 +49,7 @@ jobs:
         with:
           node-version: '12'
           cache: 'yarn'
+      - run: yarn
       - run: yarn test:e2e:ci
 
   deploy:
