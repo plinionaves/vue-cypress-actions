@@ -21,6 +21,10 @@ jobs:
     needs: install
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+          cache: 'yarn'
       - run: yarn build
 
   test-unit:
@@ -28,6 +32,10 @@ jobs:
     needs: install
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+          cache: 'yarn'
       - run: yarn test:unit:ci
 
   test-e2e:
@@ -35,6 +43,10 @@ jobs:
     needs: install
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+          cache: 'yarn'
       - run: yarn test:e2e:ci
 
   deploy:
