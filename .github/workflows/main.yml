@@ -116,8 +116,8 @@ jobs:
         run: yarn echo:${{ env.SCRIPT_SUFFIX }}
 
       - name: Get npm version
-				id: package-version
-				uses: martinbeentjes/npm-get-version-action@master
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@master
 
       - name: Create Sentry release
         env:
