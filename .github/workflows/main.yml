@@ -9,6 +9,7 @@ on:
 
 env:
   SCRIPT_SUFFIX: "${{ github.ref == 'refs/heads/development' && 'development' || github.ref == 'refs/heads/staging' && 'stage' || github.ref == 'refs/heads/main' && 'prod' }}"
+  ENVIRONMENT: "${{ github.ref == 'refs/heads/development' && 'sandbox' || github.ref == 'refs/heads/staging' && 'staging' || github.ref == 'refs/heads/main' && 'production' }}"
 
 jobs:
   install:
@@ -101,6 +102,10 @@ jobs:
     needs: [test-unit, test-e2e, build]
     steps:
       - uses: actions/checkout@v2
+      - id: dotenv
+        uses: ./.github/actions/dotenv-action
+        with:
+          path: .env.${{ env.ENVIRONMENT }}
       - name: Download dist folder
         uses: actions/download-artifact@v2
         with:
@@ -116,3 +121,4 @@ jobs:
         run: |
           echo "environment:" ${{ env.SENTRY_ENVIRONMENT }}
           echo "script suffix:" ${{ env.SCRIPT_SUFFIX }}
+          echo "env var: " ${{ steps.dotenv.outputs.pjn }}
