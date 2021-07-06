@@ -103,7 +103,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - id: dotenv
-        uses: ./.github/actions/dotenv-action
+        uses: falti/dotenv-action
         with:
           path: .env.${{ env.ENVIRONMENT }}
       - name: Download dist folder
