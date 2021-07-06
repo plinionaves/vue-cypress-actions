@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+      - development
+      - staging
 
 jobs:
   install:
@@ -68,9 +70,18 @@ jobs:
         with:
           name: dist
           path: dist
+
+      - name: Production build
+        if: github.ref == 'refs/heads/main'
+        run: echo "Production"
+
+      - name: Development build
+        if: github.ref == 'refs/heads/development'
+        run: echo "Development"
+
+      - name: Staging build
+        if: github.ref == 'refs/heads/staging'
+        run: echo "Staging"
+
       - run: ls -l dist
       - run: echo "Successfully deployed!"
-
-
-
-  
