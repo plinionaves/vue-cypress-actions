@@ -39,6 +39,13 @@ jobs:
         with:
           node-version: '12'
           cache: 'yarn'
+
+      - name: Setup custom hosts
+        run: echo "127.0.0.1  local.plataform.myapp" | sudo tee -a /etc/hosts
+
+      - name: Debug hosts
+        run: cat /etc/hosts
+
       - run: yarn
       - run: yarn test:e2e:ci
 
