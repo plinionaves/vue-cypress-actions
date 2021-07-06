@@ -107,10 +107,12 @@ jobs:
           name: dist
           path: dist
 
+      - name: Test dynamic command interpolation
+        run: yarn echo:${{ env.SCRIPT_SUFFIX }}
+
       - name: Create Sentry release
         env:
           SENTRY_ENVIRONMENT: "${{ github.ref == 'refs/heads/development' && 'development' || github.ref == 'refs/heads/staging' && 'staging' || github.ref == 'refs/heads/main' && 'production' }}"
-        run: yarn echo:${{ env.SCRIPT_SUFFIX }}
         run: |
           echo "environment:" ${{ env.SENTRY_ENVIRONMENT }}
           echo "script suffix:" ${{ env.SCRIPT_SUFFIX }}
