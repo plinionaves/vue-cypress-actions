@@ -8,7 +8,7 @@ on:
       - staging
 
 env:
-  APP_MODE: "${{ github.ref == 'refs/heads/sandbox' && 'development' || github.ref == 'refs/heads/staging' && 'staging' || github.ref == 'refs/heads/master' && 'production' }}"
+  APP_MODE: "${{ github.ref == 'refs/heads/development' && 'development' || github.ref == 'refs/heads/staging' && 'staging' || github.ref == 'refs/heads/main' && 'production' }}"
   SCRIPT_SUFFIX: "${{ github.ref == 'refs/heads/development' && 'development' || github.ref == 'refs/heads/staging' && 'stage' || github.ref == 'refs/heads/main' && 'prod' }}"
   ENVIRONMENT: "${{ github.ref == 'refs/heads/development' && 'sandbox' || github.ref == 'refs/heads/staging' && 'staging' || github.ref == 'refs/heads/main' && 'production' }}"
 
