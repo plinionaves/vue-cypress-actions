@@ -155,9 +155,9 @@ jobs:
       - name: Test dynamic command interpolation
         run: yarn echo:${{ env.SCRIPT_SUFFIX }}
 
-      - name: Get npm version
-        id: package-version
-        uses: martinbeentjes/npm-get-version-action@master
+      - name: Get latest tag
+        id: latesttag
+        uses: 'WyriHaximus/github-action-get-previous-tag@v1'
 
       - name: Create Sentry release
         env:
@@ -166,4 +166,4 @@ jobs:
           echo "environment:" ${{ env.SENTRY_ENVIRONMENT }}
           echo "script suffix:" ${{ env.SCRIPT_SUFFIX }}
           echo "env var: " ${{ steps.dotenv.outputs.pjn }}
-          echo "version: " ${{ steps.package-version.outputs.current-version }}
+          echo "version: " ${{ steps.previoustag.outputs.tag }}
