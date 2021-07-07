@@ -67,10 +67,22 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Cat package.json
+        run: cat package.json
+
       - name: Update package.json version
         uses: reedyuk/npm-version@1.1.1
         with:
           version: ${{ steps.tag_version.outputs.new_tag }}
+
+      - name: Cat package.json
+        run: cat package.json
+
+      - name: Commit updated package.json
+        uses: EndBug/add-and-commit@v7
+        with:
+          add: package.json
+          message: 'ci: release version ${{ steps.tag_version.outputs.new_tag }}'
 
       - name: Create a GitHub release
         uses: actions/create-release@v1
