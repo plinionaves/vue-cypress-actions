@@ -94,14 +94,6 @@ jobs:
           release_name: ${{ steps.tag_version.outputs.new_tag }}
           body: ${{ steps.tag_version.outputs.changelog }}
 
-      - name: Save current version in an env var
-        run: |
-          echo "${{ steps.tag_version.outputs.new_tag }}" > CURRENT_VERSION
-          echo "$(cat CURRENT_VERSION)"
-
-      - name: Log current version
-        run: echo "$(cat CURRENT_VERSION) < CURRENT_VERSION"
-
   build:
     runs-on: ubuntu-latest
     needs: release
@@ -164,6 +156,12 @@ jobs:
       - name: Test dynamic command interpolation
         run: yarn echo:${{ env.SCRIPT_SUFFIX }}
 
+      - id: web-platform
+        uses: pozetroninc/github-action-get-latest-release@master
+        with:
+          repository: ${{ github.repository }}
+          excludes: prerelease, draft
+
       - name: Create Sentry release
         env:
           SENTRY_ENVIRONMENT: "${{ github.ref == 'refs/heads/development' && 'development' || github.ref == 'refs/heads/staging' && 'staging' || github.ref == 'refs/heads/main' && 'production' }}"
@@ -171,4 +169,4 @@ jobs:
           echo "environment:" ${{ env.SENTRY_ENVIRONMENT }}
           echo "script suffix:" ${{ env.SCRIPT_SUFFIX }}
           echo "env var: " ${{ steps.dotenv.outputs.pjn }}
-          echo "version: $(cat CURRENT_VERSION) < CURRENT_VERSION"
+          echo "version: " ${{ steps.web-platform.outputs.release }}
