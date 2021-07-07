@@ -1,4 +1,4 @@
-name: Production pipe
+name: Main pipe
 
 on:
   push:
@@ -8,6 +8,7 @@ on:
       - staging
 
 env:
+  APP_MODE: "${{ github.ref == 'refs/heads/sandbox' && 'development' || github.ref == 'refs/heads/staging' && 'staging' || github.ref == 'refs/heads/master' && 'production' }}"
   SCRIPT_SUFFIX: "${{ github.ref == 'refs/heads/development' && 'development' || github.ref == 'refs/heads/staging' && 'stage' || github.ref == 'refs/heads/main' && 'prod' }}"
   ENVIRONMENT: "${{ github.ref == 'refs/heads/development' && 'sandbox' || github.ref == 'refs/heads/staging' && 'staging' || github.ref == 'refs/heads/main' && 'production' }}"
 
@@ -105,7 +106,7 @@ jobs:
       - id: dotenv
         uses: falti/dotenv-action@v0.2.5
         with:
-          path: .env.${{ env.ENVIRONMENT }}
+          path: .env.${{ env.APP_MODE }}
       - name: Download dist folder
         uses: actions/download-artifact@v2
         with:

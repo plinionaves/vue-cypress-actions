@@ -5,7 +5,9 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "echo:prod": "echo \"Showing dynamic command output!\"",
+    "echo:development": "echo \"Showing development command output!\"",
+    "echo:prod": "echo \"Showing prod command output!\"",
+    "echo:stage": "echo \"Showing stage command output!\"",
     "test:unit": "vue-cli-service test:unit",
     "test:unit:ci": "yarn test:unit --coverage",
     "test:e2e": "vue-cli-service test:e2e --mode test",
