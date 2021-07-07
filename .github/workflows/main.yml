@@ -170,3 +170,4 @@ jobs:
           echo "script suffix:" ${{ env.SCRIPT_SUFFIX }}
           echo "env var: " ${{ steps.dotenv.outputs.pjn }}
           echo "version: " ${{ steps.web-platform.outputs.release }}
+          echo "success!"
