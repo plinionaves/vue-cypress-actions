@@ -97,7 +97,7 @@ jobs:
         run: CURRENT_VERSION="${{ steps.tag_version.outputs.new_tag }}"
 
       - name: Log current version
-        run: echo $(cat CURRENT_VERSION)
+        run: echo $CURRENT_VERSION
 
   build:
     runs-on: ubuntu-latest
@@ -168,4 +168,4 @@ jobs:
           echo "environment:" ${{ env.SENTRY_ENVIRONMENT }}
           echo "script suffix:" ${{ env.SCRIPT_SUFFIX }}
           echo "env var: " ${{ steps.dotenv.outputs.pjn }}
-          echo "version: " $(cat CURRENT_VERSION)
+          echo "version: " $CURRENT_VERSION
