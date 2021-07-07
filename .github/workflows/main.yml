@@ -83,7 +83,7 @@ jobs:
         uses: EndBug/add-and-commit@v7
         with:
           add: package.json
-          message: 'ci: release version ${{ steps.tag_version.outputs.new_tag }}'
+          message: 'ci: version bump to ${{ steps.tag_version.outputs.new_tag }}'
 
       - name: Create a GitHub release
         uses: actions/create-release@v1
