@@ -61,16 +61,25 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Automated version bump
-        uses: 'phips28/gh-action-bump-version@master'
+      - name: Bump version and changelog
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v5.5
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update package.json version
+        uses: reedyuk/npm-version@1.1.1
+        with:
+          version: ${{ steps.tag_version.outputs.new_tag }}
+
+      - name: Create a GitHub release
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag-prefix: 'v'
-
-      - name: Generate changelog
-        uses: scottbrenner/generate-changelog-action@v1.3.3
-        id: changelog
+          tag_name: ${{ steps.tag_version.outputs.new_tag }}
+          release_name: ${{ steps.tag_version.outputs.new_tag }}
+          body: ${{ steps.tag_version.outputs.changelog }}
 
   build:
     runs-on: ubuntu-latest
