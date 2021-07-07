@@ -65,6 +65,7 @@ jobs:
         id: tag_version
         uses: mathieudutour/github-tag-action@v5.5
         with:
+          create_annotated_tag: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Cat package.json
@@ -94,7 +95,9 @@ jobs:
           body: ${{ steps.tag_version.outputs.changelog }}
 
       - name: Save current version in an env var
-        run: CURRENT_VERSION="${{ steps.tag_version.outputs.new_tag }}"
+        run: |
+          echo "${{ steps.tag_version.outputs.new_tag }}" > CURRENT_VERSION
+          echo "$(cat CURRENT_VERSION)"
 
       - name: Log current version
         run: echo $CURRENT_VERSION
@@ -168,4 +171,4 @@ jobs:
           echo "environment:" ${{ env.SENTRY_ENVIRONMENT }}
           echo "script suffix:" ${{ env.SCRIPT_SUFFIX }}
           echo "env var: " ${{ steps.dotenv.outputs.pjn }}
-          echo "version: " $CURRENT_VERSION
+          echo "version: $(cat CURRENT_VERSION)"
