@@ -97,7 +97,7 @@ jobs:
         run: echo ${{ steps.tag_version.outputs.new_tag }} > CURRENT_VERSION
 
       - name: Log current version
-        run: ${{ $(cat CURRENT_VERSION) }}
+        run: echo $CURRENT_VERSION
 
   build:
     runs-on: ubuntu-latest
