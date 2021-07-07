@@ -100,7 +100,7 @@ jobs:
           echo "$(cat CURRENT_VERSION)"
 
       - name: Log current version
-        run: echo $CURRENT_VERSION
+        run: echo "$(cat CURRENT_VERSION) < CURRENT_VERSION"
 
   build:
     runs-on: ubuntu-latest
