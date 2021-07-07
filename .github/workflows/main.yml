@@ -94,10 +94,10 @@ jobs:
           body: ${{ steps.tag_version.outputs.changelog }}
 
       - name: Save current version in an env var
-        run: echo ${{ steps.tag_version.outputs.new_tag }} > CURRENT_VERSION
+        run: CURRENT_VERSION="${{ steps.tag_version.outputs.new_tag }}"
 
       - name: Log current version
-        run: echo $CURRENT_VERSION
+        run: echo $(cat CURRENT_VERSION)
 
   build:
     runs-on: ubuntu-latest
