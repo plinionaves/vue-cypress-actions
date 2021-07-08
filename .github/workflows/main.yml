@@ -156,7 +156,8 @@ jobs:
       - name: Test dynamic command interpolation
         run: yarn echo:${{ env.SCRIPT_SUFFIX }}
 
-      - id: web-platform
+      - name: Get latest release name
+        id: web-platform
         uses: pozetroninc/github-action-get-latest-release@master
         with:
           repository: ${{ github.repository }}
