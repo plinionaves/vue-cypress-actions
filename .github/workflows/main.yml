@@ -67,8 +67,8 @@ jobs:
           append_to_pre_release_tag: ${{ github.ref == 'refs/heads/staging' && 'rc' || 'alpha' }}
           create_annotated_tag: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          pre_release_branches: [development, staging]
-          release_branches: [main]
+          pre_release_branches: development, staging
+          release_branches: main
 
       - name: Cat package.json
         run: cat package.json
