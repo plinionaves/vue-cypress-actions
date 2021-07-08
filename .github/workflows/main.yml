@@ -159,19 +159,26 @@ jobs:
       - name: Test dynamic command interpolation
         run: yarn echo:${{ env.SCRIPT_SUFFIX }}
 
-      - name: Get latest release name
+      - if: github.ref == 'refs/heads/main'
+        name: Get latest release name
         id: web-platform
         uses: pozetroninc/github-action-get-latest-release@master
         with:
           repository: ${{ github.repository }}
           excludes: prerelease, draft
 
+      - if: github.ref != 'refs/heads/main'
+        name: Get current package.json version
+        id: package-json
+        uses: martinbeentjes/npm-get-version-action@master
+
       - name: Create Sentry release
         env:
           SENTRY_ENVIRONMENT: "${{ github.ref == 'refs/heads/development' && 'development' || github.ref == 'refs/heads/staging' && 'staging' || github.ref == 'refs/heads/main' && 'production' }}"
+          CURRENT_VERSION: "${{ github.ref == 'refs/heads/main' && steps.web-platform.outputs.release || steps.package-json.outputs.current-version  }}"
         run: |
           echo "environment:" ${{ env.SENTRY_ENVIRONMENT }}
           echo "script suffix:" ${{ env.SCRIPT_SUFFIX }}
           echo "env var: " ${{ steps.dotenv.outputs.pjn }}
-          echo "version: " ${{ steps.web-platform.outputs.release }}
+          echo "version: " ${{ env.CURRENT_VERSION }}
           echo "success!"
